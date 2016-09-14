@@ -15,6 +15,8 @@ class HostViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var connectButton: UIBarButtonItem!
     
+    let MyKeychainWrapper = KeychainWrapper()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +24,16 @@ class HostViewController: UIViewController {
         hostField.delegate = self
         usernameField.delegate = self
         passwordField.delegate = self
+        
+        if let host = NSUserDefaults.standardUserDefaults().valueForKey("host") as? String {
+            hostField.text = host
+        }
+        if let user = NSUserDefaults.standardUserDefaults().valueForKey("username") as? String {
+            usernameField.text = user
+        }
+        if let password = MyKeychainWrapper.myObjectForKey(kSecValueData) as? String {
+            passwordField.text = password
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,6 +42,11 @@ class HostViewController: UIViewController {
     }
     
     @IBAction func connect(sender: AnyObject) {
+        NSUserDefaults.standardUserDefaults().setValue(self.hostField.text, forKey: "host")
+        NSUserDefaults.standardUserDefaults().setValue(self.usernameField.text, forKey: "username")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        MyKeychainWrapper.mySetObject(passwordField.text, forKey:kSecValueData)
+        MyKeychainWrapper.writeToKeychain()
         performSegueWithIdentifier("connectSegue", sender: self)
     }
     

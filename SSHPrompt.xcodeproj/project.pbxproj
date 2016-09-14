@@ -20,6 +20,7 @@
 		ABD9AC801D89D8EB005362E0 /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD9AC7E1D89D8E4005362E0 /* NMSSH.framework */; };
 		ABD9AC811D89D8EB005362E0 /* NMSSH.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ABD9AC7E1D89D8E4005362E0 /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ABD9AC841D89DA2A005362E0 /* HostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD9AC831D89DA2A005362E0 /* HostViewController.swift */; };
+		ABD9AC881D89ED15005362E0 /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD9AC871D89ED15005362E0 /* KeychainWrapper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,8 @@
 		ABA2E8371D85A8710074F05C /* SSHPrompt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SSHPrompt-Bridging-Header.h"; sourceTree = "<group>"; };
 		ABD9AC7E1D89D8E4005362E0 /* NMSSH.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NMSSH.framework; sourceTree = "<group>"; };
 		ABD9AC831D89DA2A005362E0 /* HostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostViewController.swift; sourceTree = "<group>"; };
+		ABD9AC861D89ED15005362E0 /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
+		ABD9AC871D89ED15005362E0 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,7 @@
 		ABA2E8011D85A7550074F05C /* SSHPrompt */ = {
 			isa = PBXGroup;
 			children = (
+				ABD9AC851D89ED03005362E0 /* Keychain */,
 				ABA2E8301D85A7E70074F05C /* Framework */,
 				ABA2E8021D85A7550074F05C /* AppDelegate.swift */,
 				ABA2E8041D85A7550074F05C /* TerminalViewController.swift */,
@@ -165,6 +169,15 @@
 				ABA2E8331D85A80C0074F05C /* CFNetwork.framework */,
 			);
 			name = Framework;
+			sourceTree = "<group>";
+		};
+		ABD9AC851D89ED03005362E0 /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				ABD9AC861D89ED15005362E0 /* KeychainWrapper.h */,
+				ABD9AC871D89ED15005362E0 /* KeychainWrapper.m */,
+			);
+			name = Keychain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,6 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABA2E8051D85A7550074F05C /* TerminalViewController.swift in Sources */,
+				ABD9AC881D89ED15005362E0 /* KeychainWrapper.m in Sources */,
 				ABA2E8031D85A7550074F05C /* AppDelegate.swift in Sources */,
 				ABD9AC841D89DA2A005362E0 /* HostViewController.swift in Sources */,
 			);
