@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xtW-KT-sHf">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Host-->
+        <scene sceneID="SAf-LN-mfI">
+            <objects>
+                <viewController id="aF9-GT-fmo" customClass="HostViewController" customModule="SSHPrompt" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bfn-TC-zHH"/>
+                        <viewControllerLayoutGuide type="bottom" id="XmV-xD-fgR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BVw-uK-kZX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="UR1-UG-ZNS">
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Host" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fsh-fy-x5C">
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="next"/>
+                                        <connections>
+                                            <action selector="editChanged" destination="aF9-GT-fmo" eventType="editingChanged" id="E3o-BP-pb1"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Ud-WX-SS8">
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                        <connections>
+                                            <action selector="editChanged" destination="aF9-GT-fmo" eventType="editingChanged" id="oNU-pm-upS"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1fy-x3-Rfk">
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                                        <connections>
+                                            <action selector="editChanged" destination="aF9-GT-fmo" eventType="editingChanged" id="6hR-Ph-QOq"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="UR1-UG-ZNS" secondAttribute="trailing" id="7CV-xk-VMN"/>
+                            <constraint firstItem="UR1-UG-ZNS" firstAttribute="top" secondItem="bfn-TC-zHH" secondAttribute="bottom" constant="8" id="k2f-ag-3NX"/>
+                            <constraint firstItem="UR1-UG-ZNS" firstAttribute="leading" secondItem="BVw-uK-kZX" secondAttribute="leadingMargin" id="kQ4-Bx-Yg2"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Host" id="h4C-3N-OEK">
+                        <barButtonItem key="rightBarButtonItem" title="Connect" id="hbo-SR-ovw">
+                            <connections>
+                                <action selector="connect:" destination="aF9-GT-fmo" id="2fg-35-HVE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="connectButton" destination="hbo-SR-ovw" id="6vK-7Z-RX5"/>
+                        <outlet property="hostField" destination="Fsh-fy-x5C" id="T3a-3A-Ggf"/>
+                        <outlet property="passwordField" destination="1fy-x3-Rfk" id="1u5-70-XWU"/>
+                        <outlet property="usernameField" destination="5Ud-WX-SS8" id="vbO-Wr-foP"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="connectSegue" id="EOH-jO-VbE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="07b-85-GCi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="641.25" y="314.78873239436621"/>
+        </scene>
+        <!--Terminal View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="TerminalViewController" customModule="SSHPrompt" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="E5l-6w-lwU">
+                                <frame key="frameInset" minY="28" width="320" height="540"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="10"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="2Zg-01-r0w"/>
+                                </connections>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="terminalTextView" destination="E5l-6w-lwU" id="YSj-4U-XGB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1436.25" y="314.78873239436621"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="tUv-PP-07L">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xtW-KT-sHf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ohh-R9-aaY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="aF9-GT-fmo" kind="relationship" relationship="rootViewController" id="1Jq-SD-m2A"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sMa-Z9-cSt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-286.875" y="313.73239436619718"/>
+        </scene>
+    </scenes>
+</document>
