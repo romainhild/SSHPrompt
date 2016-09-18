@@ -7,6 +7,53 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Hosts List Table View Controller-->
+        <scene sceneID="cll-6R-yWh">
+            <objects>
+                <tableViewController id="yWw-Dm-T7O" customClass="HostsListTableViewController" customModule="SSHPrompt" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ShH-dJ-v5A">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HostCell" textLabel="vUz-VW-rmU" style="IBUITableViewCellStyleDefault" id="bzc-4Y-tPp">
+                                <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bzc-4Y-tPp" id="UDC-98-E6v">
+                                    <frame key="frameInset" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vUz-VW-rmU">
+                                            <frame key="frameInset" minX="15" width="290" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="connectSegue" id="Jet-FQ-WZ8"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="yWw-Dm-T7O" id="uZ3-iG-Qr8"/>
+                            <outlet property="delegate" destination="yWw-Dm-T7O" id="hav-sG-gwh"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Lvu-RS-idU">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="4zd-Yh-LFQ">
+                            <connections>
+                                <segue destination="v6R-sF-aTG" kind="presentation" identifier="addHostSegue" id="CMo-wI-saq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oTJ-Bu-a6t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-339" y="315"/>
+        </scene>
         <!--Host-->
         <scene sceneID="SAf-LN-mfI">
             <objects>
@@ -21,6 +68,14 @@
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="UR1-UG-ZNS">
                                 <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zyy-AF-agK">
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                        <connections>
+                                            <action selector="editChanged" destination="aF9-GT-fmo" eventType="editingChanged" id="dBP-mF-Tc2"/>
+                                        </connections>
+                                    </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Host" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fsh-fy-x5C">
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -41,9 +96,6 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
-                                        <connections>
-                                            <action selector="editChanged" destination="aF9-GT-fmo" eventType="editingChanged" id="6hR-Ph-QOq"/>
-                                        </connections>
                                     </textField>
                                 </subviews>
                             </stackView>
@@ -56,23 +108,28 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Host" id="h4C-3N-OEK">
-                        <barButtonItem key="rightBarButtonItem" title="Connect" id="hbo-SR-ovw">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="c5X-98-RCJ">
                             <connections>
-                                <action selector="connect:" destination="aF9-GT-fmo" id="2fg-35-HVE"/>
+                                <action selector="cancel:" destination="aF9-GT-fmo" id="sgI-uR-CU3"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="hbo-SR-ovw">
+                            <connections>
+                                <action selector="save:" destination="aF9-GT-fmo" id="MVt-oJ-Rfl"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="connectButton" destination="hbo-SR-ovw" id="6vK-7Z-RX5"/>
                         <outlet property="hostField" destination="Fsh-fy-x5C" id="T3a-3A-Ggf"/>
+                        <outlet property="nameField" destination="zyy-AF-agK" id="KWa-pN-pco"/>
                         <outlet property="passwordField" destination="1fy-x3-Rfk" id="1u5-70-XWU"/>
+                        <outlet property="saveButton" destination="hbo-SR-ovw" id="7B9-As-cFb"/>
                         <outlet property="usernameField" destination="5Ud-WX-SS8" id="vbO-Wr-foP"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="connectSegue" id="EOH-jO-VbE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="07b-85-GCi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="641.25" y="314.78873239436621"/>
+            <point key="canvasLocation" x="1592" y="-393"/>
         </scene>
         <!--Terminal View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -105,7 +162,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1436.25" y="314.78873239436621"/>
+            <point key="canvasLocation" x="653" y="315"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tUv-PP-07L">
@@ -118,12 +175,30 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="aF9-GT-fmo" kind="relationship" relationship="rootViewController" id="1Jq-SD-m2A"/>
+                        <segue destination="yWw-Dm-T7O" kind="relationship" relationship="rootViewController" id="Ut9-EX-t0R"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sMa-Z9-cSt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-286.875" y="313.73239436619718"/>
+            <point key="canvasLocation" x="-1142" y="315"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="0dE-H1-cGv">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="v6R-sF-aTG" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yY1-v7-qVd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="aF9-GT-fmo" kind="relationship" relationship="rootViewController" id="Pum-5O-1ug"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hmV-Bw-3VW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="653" y="-392"/>
         </scene>
     </scenes>
 </document>
