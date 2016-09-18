@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Locksmith
 
 class HostViewController: UIViewController {
 
@@ -14,25 +15,35 @@ class HostViewController: UIViewController {
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var connectButton: UIBarButtonItem!
+    @IBOutlet weak var rememberSwitch: UISwitch!
     
-    let MyKeychainWrapper = KeychainWrapper()
+    var host: Host?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        connectButton.enabled = false
+        connectButton.isEnabled = false
         hostField.delegate = self
         usernameField.delegate = self
         passwordField.delegate = self
         
-        if let host = NSUserDefaults.standardUserDefaults().valueForKey("host") as? String {
-            hostField.text = host
+        var hasHostname: Bool = false
+        var hasUsername: Bool = false
+        
+        if let hostname = UserDefaults.standard.value(forKey: "hostname") as? String {
+            hostField.text = hostname
+            hasHostname = true
         }
-        if let user = NSUserDefaults.standardUserDefaults().valueForKey("username") as? String {
+        if let user = UserDefaults.standard.value(forKey: "username") as? String {
             usernameField.text = user
+            hasUsername = true
         }
-        if let password = MyKeychainWrapper.myObjectForKey(kSecValueData) as? String {
-            passwordField.text = password
+        if hasUsername && hasHostname && rememberSwitch.isOn {
+            host = Host(hostname: hostField.text!, andUser: usernameField.text!)
+            let dict = host!.readFromSecureStore()
+            if let data = dict?.data, let password = data["password"] as? String {
+                passwordField.text = password
+            }
         }
     }
 
@@ -41,29 +52,41 @@ class HostViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func connect(sender: AnyObject) {
-        NSUserDefaults.standardUserDefaults().setValue(self.hostField.text, forKey: "host")
-        NSUserDefaults.standardUserDefaults().setValue(self.usernameField.text, forKey: "username")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        MyKeychainWrapper.mySetObject(passwordField.text, forKey:kSecValueData)
-        MyKeychainWrapper.writeToKeychain()
-        performSegueWithIdentifier("connectSegue", sender: self)
+    @IBAction func connect(_ sender: AnyObject) {
+        UserDefaults.standard.setValue(self.hostField.text, forKey: "hostname")
+        UserDefaults.standard.setValue(self.usernameField.text, forKey: "username")
+        UserDefaults.standard.synchronize()
+        if let host = self.host {
+//            if hostField.text == host.hostname && usernameField.text == host.username {
+            try? self.host!.deleteFromSecureStore()
+            self.host!.password = passwordField.text!
+            self.host!.hostname = hostField.text!
+            self.host!.username = usernameField.text!
+            try? self.host!.createInSecureStore()
+//            }
+        } else {
+            self.host = Host(hostname: hostField.text!, andUser: usernameField.text!)
+            self.host!.password = passwordField.text!
+            try? self.host!.createInSecureStore()
+        }
+        
+        performSegue(withIdentifier: "connectSegue", sender: self)
     }
     
     @IBAction func editChanged() {
-        if let host = hostField.text, user = usernameField.text, password = passwordField.text where !host.isEmpty && !user.isEmpty && !password.isEmpty {
-            connectButton.enabled = true
+        if let host = hostField.text, let user = usernameField.text, let password = passwordField.text , !host.isEmpty && !user.isEmpty && !password.isEmpty {
+            connectButton.isEnabled = true
         } else {
-            connectButton.enabled = false
+            connectButton.isEnabled = false
         }
     }
 
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "connectSegue" {
-            let terminalView = segue.destinationViewController as! TerminalViewController
+            let terminalView = segue.destination as! TerminalViewController
             terminalView.connectToHost(hostField.text!, withUsername: usernameField.text!, andPassword: passwordField.text!)
         }
     }
@@ -71,7 +94,7 @@ class HostViewController: UIViewController {
 }
 
 extension HostViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == hostField {
             hostField.resignFirstResponder()
             usernameField.becomeFirstResponder()

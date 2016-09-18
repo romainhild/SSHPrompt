@@ -11,7 +11,7 @@ import UIKit
 class TerminalViewController: UIViewController {
     
     var session: NMSSHSession!
-    let sshQueue: dispatch_queue_t = dispatch_queue_create("SSHPrompt.queue", DISPATCH_QUEUE_SERIAL)
+    let sshQueue: DispatchQueue = DispatchQueue(label: "SSHPrompt.queue", attributes: [])
     var lenghtOfText: Int = 0
     var lastCommand: String = ""
 
@@ -24,15 +24,15 @@ class TerminalViewController: UIViewController {
         //logger.logLevel = .Verbose
     }
     
-    func connectToHost(host: String, withUsername user: String, andPassword password: String) {
-        dispatch_async(self.sshQueue) {
+    func connectToHost(_ host: String, withUsername user: String, andPassword password: String) {
+        self.sshQueue.async {
             self.session = NMSSHSession(host: host, andUsername: user)
             self.session.delegate = self
             self.session.connect()
-            if self.session.connected {
-                self.session.authenticateByPassword(password)
+            if self.session.isConnected {
+                self.session.authenticate(byPassword: password)
                 
-                if self.session.authorized {
+                if self.session.isAuthorized {
                     self.session.channel.delegate = self
                     self.session.channel.requestPty = true
                     
@@ -57,9 +57,9 @@ class TerminalViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func appendTextTerminal(text: String) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.lenghtOfText += text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+    func appendTextTerminal(_ text: String) {
+        DispatchQueue.main.async {
+            self.lenghtOfText += text.lengthOfBytes(using: String.Encoding.utf8)
             self.terminalTextView.text = self.terminalTextView.text + text
         }
     }
@@ -67,47 +67,47 @@ class TerminalViewController: UIViewController {
 }
 
 extension TerminalViewController: NMSSHChannelDelegate {
-    func channel(channel: NMSSHChannel!, didReadData message: String!) {
+    func channel(_ channel: NMSSHChannel!, didReadData message: String!) {
         print("channelDidReadData : '\(message)'")
         appendTextTerminal(message)
     }
     
-    func channel(channel: NMSSHChannel!, didReadError error: String!) {
+    func channel(_ channel: NMSSHChannel!, didReadError error: String!) {
         print("channelDidReadError: \(error)")
     }
     
-    func channelShellDidClose(channel: NMSSHChannel!) {
+    func channelShellDidClose(_ channel: NMSSHChannel!) {
         print("channelShellDidClose")
     }
     
-    func channel(channel: NMSSHChannel!, didReadRawData data: NSData!) {
+    func channel(_ channel: NMSSHChannel!, didReadRawData data: Data!) {
         print("channelDidReadRawData")
     }
     
-    func channel(channel: NMSSHChannel!, didReadRawError error: NSData!) {
+    func channel(_ channel: NMSSHChannel!, didReadRawError error: Data!) {
         print("channelDidReadRawError")
     }
     
 }
 
 extension TerminalViewController: NMSSHSessionDelegate {
-    func session(session: NMSSHSession!, didDisconnectWithError error: NSError!) {
+    func session(_ session: NMSSHSession!, didDisconnectWithError error: Error!) {
         print("sessionDidDisconnectWithError: \(error.localizedDescription)")
     }
     
-    func session(session: NMSSHSession!, keyboardInteractiveRequest request: String!) -> String! {
+    func session(_ session: NMSSHSession!, keyboardInteractiveRequest request: String!) -> String! {
         print("sessionsKeyboardInteractiveRequest: \(request)")
         return request
     }
     
-    func session(session: NMSSHSession!, shouldConnectToHostWithFingerprint fingerprint: String!) -> Bool {
+    func session(_ session: NMSSHSession!, shouldConnectToHostWithFingerprint fingerprint: String!) -> Bool {
         print("sessionsShouldConnectToHostWithFingerprint: \(fingerprint)")
         return true
     }
 }
 
 extension TerminalViewController: UITextViewDelegate {
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         //print("replace text '\(text)' in range \(range.location)-\(range.location+range.length) with length \(self.lenghtOfText)")
         if range.location < self.lenghtOfText {
             return false
@@ -116,11 +116,11 @@ extension TerminalViewController: UITextViewDelegate {
             if text != "\n" {
                 return true
             } else {
-                if let start = textView.positionFromPosition(textView.beginningOfDocument, offset: self.lenghtOfText) {
+                if let start = textView.position(from: textView.beginningOfDocument, offset: self.lenghtOfText) {
                     let end = textView.endOfDocument
-                    if let commandRange = textView.textRangeFromPosition(start, toPosition: end), command = textView.textInRange(commandRange) {
+                    if let commandRange = textView.textRange(from: start, to: end), let command = textView.text(in: commandRange) {
                         print("command : \(command)")
-                        dispatch_async(sshQueue) {
+                        sshQueue.async {
                             do {
                                 try self.session.channel.write(command)
                                 try self.session.channel.write("\n")
@@ -130,7 +130,7 @@ extension TerminalViewController: UITextViewDelegate {
                         }
                     }
                 }
-                self.lenghtOfText += lastCommand.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) + 1
+                self.lenghtOfText += lastCommand.lengthOfBytes(using: String.Encoding.utf8) + 1
                 lastCommand = ""
                 return false
             }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB9BD9451D8EF92800C52A97 /* HostsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9BD9441D8EF92800C52A97 /* HostsListTableViewController.swift */; };
 		ABA2E8031D85A7550074F05C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA2E8021D85A7550074F05C /* AppDelegate.swift */; };
 		ABA2E8051D85A7550074F05C /* TerminalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA2E8041D85A7550074F05C /* TerminalViewController.swift */; };
 		ABA2E8081D85A7550074F05C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABA2E8061D85A7550074F05C /* Main.storyboard */; };
@@ -20,7 +21,11 @@
 		ABD9AC801D89D8EB005362E0 /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD9AC7E1D89D8E4005362E0 /* NMSSH.framework */; };
 		ABD9AC811D89D8EB005362E0 /* NMSSH.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ABD9AC7E1D89D8E4005362E0 /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ABD9AC841D89DA2A005362E0 /* HostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD9AC831D89DA2A005362E0 /* HostViewController.swift */; };
-		ABD9AC881D89ED15005362E0 /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD9AC871D89ED15005362E0 /* KeychainWrapper.m */; };
+		ABD9AC8F1D8EB7A4005362E0 /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD9AC8E1D8EB7A4005362E0 /* Locksmith.framework */; };
+		ABD9AC911D8EB7BC005362E0 /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD9AC901D8EB7BC005362E0 /* Locksmith.framework */; };
+		ABD9AC921D8EB7BC005362E0 /* Locksmith.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ABD9AC901D8EB7BC005362E0 /* Locksmith.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ABD9AC971D8EBBA1005362E0 /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD9AC961D8EBBA1005362E0 /* NMSSH.framework */; };
+		ABD9AC9C1D8EC0D8005362E0 /* Host.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD9AC9B1D8EC0D8005362E0 /* Host.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +53,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				ABD9AC811D89D8EB005362E0 /* NMSSH.framework in Embed Frameworks */,
+				ABD9AC921D8EB7BC005362E0 /* Locksmith.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,6 +61,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB9BD9441D8EF92800C52A97 /* HostsListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostsListTableViewController.swift; sourceTree = "<group>"; };
 		ABA2E7FF1D85A7550074F05C /* SSHPrompt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSHPrompt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA2E8021D85A7550074F05C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABA2E8041D85A7550074F05C /* TerminalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalViewController.swift; sourceTree = "<group>"; };
@@ -73,8 +80,12 @@
 		ABA2E8371D85A8710074F05C /* SSHPrompt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SSHPrompt-Bridging-Header.h"; sourceTree = "<group>"; };
 		ABD9AC7E1D89D8E4005362E0 /* NMSSH.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NMSSH.framework; sourceTree = "<group>"; };
 		ABD9AC831D89DA2A005362E0 /* HostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostViewController.swift; sourceTree = "<group>"; };
-		ABD9AC861D89ED15005362E0 /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
-		ABD9AC871D89ED15005362E0 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
+		ABD9AC8E1D8EB7A4005362E0 /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = Carthage/Build/iOS/Locksmith.framework; sourceTree = "<group>"; };
+		ABD9AC901D8EB7BC005362E0 /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = ../Carthage/Build/iOS/Locksmith.framework; sourceTree = "<group>"; };
+		ABD9AC961D8EBBA1005362E0 /* NMSSH.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NMSSH.framework; sourceTree = "<group>"; };
+		ABD9AC991D8EBC62005362E0 /* SSHPromptTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SSHPromptTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		ABD9AC9A1D8EBDAD005362E0 /* SSHPrompt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SSHPrompt-Bridging-Header.h"; sourceTree = "<group>"; };
+		ABD9AC9B1D8EC0D8005362E0 /* Host.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Host.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,8 +93,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABD9AC8F1D8EB7A4005362E0 /* Locksmith.framework in Frameworks */,
 				ABD9AC801D89D8EB005362E0 /* NMSSH.framework in Frameworks */,
 				ABD9AC7F1D89D8E4005362E0 /* NMSSH.framework in Frameworks */,
+				ABD9AC911D8EB7BC005362E0 /* Locksmith.framework in Frameworks */,
 				ABA2E8361D85A8330074F05C /* libz.tbd in Frameworks */,
 				ABA2E8341D85A80C0074F05C /* CFNetwork.framework in Frameworks */,
 			);
@@ -93,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABD9AC971D8EBBA1005362E0 /* NMSSH.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +128,7 @@
 				ABA2E8161D85A7550074F05C /* SSHPromptTests */,
 				ABA2E8211D85A7550074F05C /* SSHPromptUITests */,
 				ABA2E8001D85A7550074F05C /* Products */,
+				ABD9AC8D1D8EB7A4005362E0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,7 +150,9 @@
 				ABA2E8021D85A7550074F05C /* AppDelegate.swift */,
 				ABA2E8041D85A7550074F05C /* TerminalViewController.swift */,
 				ABD9AC831D89DA2A005362E0 /* HostViewController.swift */,
+				ABD9AC9B1D8EC0D8005362E0 /* Host.swift */,
 				ABA2E8061D85A7550074F05C /* Main.storyboard */,
+				AB9BD9441D8EF92800C52A97 /* HostsListTableViewController.swift */,
 				ABA2E8091D85A7550074F05C /* Assets.xcassets */,
 				ABA2E80B1D85A7550074F05C /* LaunchScreen.storyboard */,
 				ABA2E80E1D85A7550074F05C /* Info.plist */,
@@ -147,7 +164,10 @@
 		ABA2E8161D85A7550074F05C /* SSHPromptTests */ = {
 			isa = PBXGroup;
 			children = (
+				ABD9AC961D8EBBA1005362E0 /* NMSSH.framework */,
 				ABA2E8171D85A7550074F05C /* SSHPromptTests.swift */,
+				ABD9AC991D8EBC62005362E0 /* SSHPromptTests-Bridging-Header.h */,
+				ABD9AC9A1D8EBDAD005362E0 /* SSHPrompt-Bridging-Header.h */,
 				ABA2E8191D85A7550074F05C /* Info.plist */,
 			);
 			path = SSHPromptTests;
@@ -174,10 +194,17 @@
 		ABD9AC851D89ED03005362E0 /* Keychain */ = {
 			isa = PBXGroup;
 			children = (
-				ABD9AC861D89ED15005362E0 /* KeychainWrapper.h */,
-				ABD9AC871D89ED15005362E0 /* KeychainWrapper.m */,
+				ABD9AC901D8EB7BC005362E0 /* Locksmith.framework */,
 			);
 			name = Keychain;
+			sourceTree = "<group>";
+		};
+		ABD9AC8D1D8EB7A4005362E0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ABD9AC8E1D8EB7A4005362E0 /* Locksmith.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -318,9 +345,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABA2E8051D85A7550074F05C /* TerminalViewController.swift in Sources */,
-				ABD9AC881D89ED15005362E0 /* KeychainWrapper.m in Sources */,
 				ABA2E8031D85A7550074F05C /* AppDelegate.swift in Sources */,
+				AB9BD9451D8EF92800C52A97 /* HostsListTableViewController.swift in Sources */,
 				ABD9AC841D89DA2A005362E0 /* HostViewController.swift in Sources */,
+				ABD9AC9C1D8EC0D8005362E0 /* Host.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +504,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SSHPrompt",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = SSHPrompt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -484,7 +513,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SSHPrompt/SSHPrompt-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -499,6 +528,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SSHPrompt",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = SSHPrompt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -506,7 +536,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SSHPrompt/SSHPrompt-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -515,11 +545,17 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = U34ZVBHBJ7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SSHPrompt",
+					"$(PROJECT_DIR)/SSHPromptTests",
+				);
 				INFOPLIST_FILE = SSHPromptTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hild.SSHPromptTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SSHPrompt.app/SSHPrompt";
 			};
 			name = Debug;
@@ -529,11 +565,17 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = U34ZVBHBJ7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SSHPrompt",
+					"$(PROJECT_DIR)/SSHPromptTests",
+				);
 				INFOPLIST_FILE = SSHPromptTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hild.SSHPromptTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SSHPrompt.app/SSHPrompt";
 			};
 			name = Release;
