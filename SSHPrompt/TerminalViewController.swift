@@ -24,13 +24,15 @@ class TerminalViewController: UIViewController {
         //logger.logLevel = .Verbose
     }
     
-    func connectToHost(_ host: String, withUsername user: String, andPassword password: String) {
+    func connect(toHost host: Host) {
         self.sshQueue.async {
-            self.session = NMSSHSession(host: host, andUsername: user)
+            self.session = NMSSHSession(host: host.hostname, andUsername: host.username)
             self.session.delegate = self
             self.session.connect()
             if self.session.isConnected {
-                self.session.authenticate(byPassword: password)
+                if let password = host.password {
+                    self.session.authenticate(byPassword: password)
+                } 
                 
                 if self.session.isAuthorized {
                     self.session.channel.delegate = self
@@ -39,14 +41,8 @@ class TerminalViewController: UIViewController {
                     do {
                         try self.session.channel.startShell()
                     } catch {
-                        print("error")
+                        print("error starting shell")
                     }
-                    //                session.sftp.connect()
-                    //
-                    //                let remoteFileList = session.sftp.contentsOfDirectoryAtPath("/")
-                    //                for file in remoteFileList {
-                    //                    print(file.filename)
-                    //                }
                 }
             }
         }
@@ -69,7 +65,12 @@ class TerminalViewController: UIViewController {
 extension TerminalViewController: NMSSHChannelDelegate {
     func channel(_ channel: NMSSHChannel!, didReadData message: String!) {
         print("channelDidReadData : '\(message)'")
-        appendTextTerminal(message)
+        if message.trimmingCharacters(in: .newlines) == lastCommand.trimmingCharacters(in: .newlines) {
+            print("read last command")
+            lastCommand = ""
+        } else {
+            appendTextTerminal(message)
+        }
     }
     
     func channel(_ channel: NMSSHChannel!, didReadError error: String!) {
@@ -108,33 +109,28 @@ extension TerminalViewController: NMSSHSessionDelegate {
 
 extension TerminalViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        //print("replace text '\(text)' in range \(range.location)-\(range.location+range.length) with length \(self.lenghtOfText)")
-        if range.location < self.lenghtOfText {
-            return false
-        } else {
-            lastCommand += text
-            if text != "\n" {
+        if text.characters.count == 0 {
+            if self.lastCommand.characters.count > 0 {
+                lastCommand.remove(at: lastCommand.index(before: lastCommand.endIndex))
                 return true
             } else {
-                if let start = textView.position(from: textView.beginningOfDocument, offset: self.lenghtOfText) {
-                    let end = textView.endOfDocument
-                    if let commandRange = textView.textRange(from: start, to: end), let command = textView.text(in: commandRange) {
-                        print("command : \(command)")
-                        sshQueue.async {
-                            do {
-                                try self.session.channel.write(command)
-                                try self.session.channel.write("\n")
-                            } catch {
-                                print("error command")
-                            }
-                        }
-                    }
-                }
-                self.lenghtOfText += lastCommand.lengthOfBytes(using: String.Encoding.utf8) + 1
-                lastCommand = ""
                 return false
             }
         }
+        
+        self.lastCommand.append(text)
+        
+        if text == "\n" {
+            sshQueue.async {
+                do {
+                    try self.session.channel.write(self.lastCommand)
+                } catch {
+                    print("error command : \(self.lastCommand)")
+                }
+            }
+        }
+        
+        return true
     }
 }
 

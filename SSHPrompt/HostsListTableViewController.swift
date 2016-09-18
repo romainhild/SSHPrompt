@@ -116,6 +116,12 @@ class HostsListTableViewController: UITableViewController {
                 hostController.host = host
             }
         }
+        else if segue.identifier == "connectSegue" {
+            if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
+                let terminalController = segue.destination as! TerminalViewController
+                terminalController.connect(toHost: hostList[indexPath.row])
+            }
+        }
     }
 
 }

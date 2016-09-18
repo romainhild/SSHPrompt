@@ -67,26 +67,6 @@ class HostViewController: UIViewController {
         }
         self.dismiss(animated: true, completion: nil)
     }
-//    @IBAction func connect(_ sender: AnyObject) {
-//        UserDefaults.standard.setValue(self.hostField.text, forKey: "hostname")
-//        UserDefaults.standard.setValue(self.usernameField.text, forKey: "username")
-//        UserDefaults.standard.synchronize()
-//        if let host = self.host {
-////            if hostField.text == host.hostname && usernameField.text == host.username {
-//            try? self.host!.deleteFromSecureStore()
-//            self.host!.password = passwordField.text!
-//            self.host!.hostname = hostField.text!
-//            self.host!.username = usernameField.text!
-//            try? self.host!.createInSecureStore()
-////            }
-//        } else {
-//            self.host = Host(hostname: hostField.text!, andUser: usernameField.text!)
-//            self.host!.password = passwordField.text!
-//            try? self.host!.createInSecureStore()
-//        }
-//        
-//        performSegue(withIdentifier: "connectSegue", sender: self)
-//    }
     
     @IBAction func editChanged() {
         if let name = nameField.text, let host = hostField.text, let user = usernameField.text, !host.isEmpty && !user.isEmpty && !name.isEmpty {
