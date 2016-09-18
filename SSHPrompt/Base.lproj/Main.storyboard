@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Hosts List Table View Controller-->
+        <!--Host List-->
         <scene sceneID="cll-6R-yWh">
             <objects>
                 <tableViewController id="yWw-Dm-T7O" customClass="HostsListTableViewController" customModule="SSHPrompt" customModuleProvider="target" sceneMemberID="viewController">
@@ -42,7 +42,7 @@
                             <outlet property="delegate" destination="yWw-Dm-T7O" id="hav-sG-gwh"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Lvu-RS-idU">
+                    <navigationItem key="navigationItem" title="Host List" id="Lvu-RS-idU">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="4zd-Yh-LFQ">
                             <connections>
                                 <segue destination="v6R-sF-aTG" kind="presentation" identifier="addHostSegue" id="CMo-wI-saq"/>
@@ -54,7 +54,7 @@
             </objects>
             <point key="canvasLocation" x="-339" y="315"/>
         </scene>
-        <!--Host-->
+        <!--Host View Controller-->
         <scene sceneID="SAf-LN-mfI">
             <objects>
                 <viewController id="aF9-GT-fmo" customClass="HostViewController" customModule="SSHPrompt" customModuleProvider="target" sceneMemberID="viewController">
@@ -107,7 +107,7 @@
                             <constraint firstItem="UR1-UG-ZNS" firstAttribute="leading" secondItem="BVw-uK-kZX" secondAttribute="leadingMargin" id="kQ4-Bx-Yg2"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Host" id="h4C-3N-OEK">
+                    <navigationItem key="navigationItem" id="h4C-3N-OEK">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="c5X-98-RCJ">
                             <connections>
                                 <action selector="cancel:" destination="aF9-GT-fmo" id="sgI-uR-CU3"/>

@@ -23,12 +23,22 @@ class HostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        saveButton.isEnabled = false
         nameField.delegate = self
         hostField.delegate = self
         usernameField.delegate = self
         passwordField.delegate = self
         
+        if let hostToEdit = self.host {
+            self.title = hostToEdit.name
+            self.nameField.text = hostToEdit.name
+            self.hostField.text = hostToEdit.hostname
+            self.usernameField.text = hostToEdit.username
+            self.passwordField.text = hostToEdit.password
+            self.saveButton.isEnabled = true
+        } else {
+            self.title = "New Host"
+            saveButton.isEnabled = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,15 +47,24 @@ class HostViewController: UIViewController {
     }
     
     @IBAction func cancel(_ sender: AnyObject) {
+        self.delegate?.hostViewCanceled(sender: self)
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func save(_ sender: AnyObject) {
-        host = Host(name: nameField.text!, hostname: hostField.text!, andUser: usernameField.text!)
-        if let pass = passwordField.text, !pass.isEmpty {
-            self.host?.password = pass
+        if let _ = self.host {
+            self.host!.name = nameField.text!
+            self.host!.hostname = hostField.text!
+            self.host!.username = usernameField.text!
+            self.host!.password = passwordField.text
+            self.delegate?.hostView(sender: self, editedHost: self.host!)
+        } else {
+            host = Host(name: nameField.text!, hostname: hostField.text!, andUser: usernameField.text!)
+            if let pass = passwordField.text, !pass.isEmpty {
+                self.host?.password = pass
+            }
+            self.delegate?.hostView(sender: self, savedHost: host!)
         }
-        self.delegate?.hostView(sender: self, savedHost: host!)
         self.dismiss(animated: true, completion: nil)
     }
 //    @IBAction func connect(_ sender: AnyObject) {
@@ -109,4 +128,6 @@ extension HostViewController: UITextFieldDelegate {
 
 protocol HostViewControllerDelegate {
     func hostView(sender: HostViewController, savedHost host: Host)
+    func hostView(sender: HostViewController, editedHost host: Host)
+    func hostViewCanceled(sender: HostViewController)
 }

@@ -24,7 +24,6 @@ class Host: NSObject, NSCoding, GenericPasswordSecureStorable, CreateableSecureS
         set {
             try? self.deleteFromSecureStore()
             if let newValue = newValue {
-                print(newValue)
                 self.data = ["password": newValue]
                 try? self.createInSecureStore()
             }

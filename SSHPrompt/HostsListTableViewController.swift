@@ -11,9 +11,15 @@ import UIKit
 class HostsListTableViewController: UITableViewController {
     
     var hostList = [Host]()
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        loadHostList()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -43,6 +49,24 @@ class HostsListTableViewController: UITableViewController {
         cell.textLabel?.text = hostList[indexPath.row].name
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        var actions = [UITableViewRowAction]()
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { action, indexPath in
+            self.hostList.remove(at: indexPath.row)
+            self.tableView.deselectRow(at: indexPath, animated: true)
+            self.tableView.reloadData()
+        }
+        actions.append(deleteAction)
+        
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { action, indexPath in
+            self.performSegue(withIdentifier: "addHostSegue", sender: self.hostList[indexPath.row])
+        }
+        actions.append(editAction)
+        
+        return actions
     }
 
     /*
@@ -88,14 +112,28 @@ class HostsListTableViewController: UITableViewController {
             let nav = segue.destination as! UINavigationController
             let hostController = nav.topViewController as! HostViewController
             hostController.delegate = self
+            if let host = sender as? Host {
+                hostController.host = host
+            }
         }
     }
 
 }
 
 extension HostsListTableViewController: HostViewControllerDelegate {
+    func hostView(sender: HostViewController, editedHost host: Host) {
+        if let index = hostList.index(of: host) {
+            let indexPath = IndexPath(row: index, section: 0)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
     func hostView(sender: HostViewController, savedHost host: Host) {
         hostList.append(host)
+        tableView.reloadData()
+    }
+    
+    func hostViewCanceled(sender: HostViewController) {
         tableView.reloadData()
     }
 }
